@@ -185,11 +185,41 @@ def exploracion_y_visualizacion(df: Optional[pd.DataFrame]) -> None:
     corr_matrix = df_numeric.corr()
     print(corr_matrix)
 
-    # 2. Heatmap de Correlación (Visualización)
-    print("Generando 'heatmap_correlacion.png'...")
-    plt.figure(figsize=(10, 8))
-    sns.heatmap(corr_matrix, annot=True, fmt=".2f", cmap='coolwarm', vmin=-1, vmax=1)
-    plt.title('Heatmap de Correlación entre Variables Numéricas')
+    # 2. Heatmap de Correlación (Visualización) - IMPLEMENTACIÓN MANUAL
+    print("Generando 'heatmap_correlacion.png' (sin seaborn, manual)...")
+    
+    # Convertir la matriz de correlación a un array numpy
+    corr_array = corr_matrix.values
+    columnas = corr_matrix.columns.tolist()
+    n_vars = len(columnas)
+    
+    # Crear figura
+    fig, ax = plt.subplots(figsize=(10, 8))
+    
+    # Crear el mapa de calor manualmente usando imshow
+    # imshow dibuja una imagen donde cada pixel tiene un color según su valor
+    im = ax.imshow(corr_array, cmap='coolwarm', vmin=-1, vmax=1, aspect='auto')
+    
+    # Configurar los ticks y etiquetas
+    ax.set_xticks(np.arange(n_vars))
+    ax.set_yticks(np.arange(n_vars))
+    ax.set_xticklabels(columnas, rotation=45, ha='right')
+    ax.set_yticklabels(columnas)
+    
+    # Añadir los valores numéricos en cada celda (equivalente a annot=True)
+    for i in range(n_vars):
+        for j in range(n_vars):
+            valor = corr_array[i, j]
+            # Texto en blanco si el valor es muy oscuro, negro si es claro
+            color_texto = 'white' if abs(valor) > 0.5 else 'black'
+            ax.text(j, i, f'{valor:.2f}', ha='center', va='center', 
+                   color=color_texto, fontsize=9)
+    
+    # Añadir barra de color
+    cbar = plt.colorbar(im, ax=ax)
+    cbar.set_label('Correlación', rotation=270, labelpad=20)
+    
+    ax.set_title('Heatmap de Correlación entre Variables Numéricas (Manual)')
     plt.tight_layout()
     plt.savefig('heatmap_correlacion.png')
     # plt.show() # Descomentar si se ejecuta interactivamente
