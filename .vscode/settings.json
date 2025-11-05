@@ -1,0 +1,5 @@
+{
+  "python.analysis.extraPaths": ["${workspaceFolder}/metricas_puras"],
+  "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.typeCheckingMode": "basic"
+}

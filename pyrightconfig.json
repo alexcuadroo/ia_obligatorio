@@ -1,0 +1,16 @@
+{
+  "include": ["."],
+  "exclude": ["**/__pycache__", ".venv"],
+  "typeCheckingMode": "basic",
+  "reportUnknownVariableType": "none",
+  "reportUnknownParameterType": "none",
+  "reportUnknownArgumentType": "none",
+  "reportUnknownMemberType": "none",
+  "reportMissingParameterType": "warning",
+  "reportMissingTypeStubs": false,
+  "reportImportCycles": "warning",
+  "reportUnusedImport": "warning",
+  "reportUnusedVariable": "warning",
+  "reportDuplicateImport": "warning",
+  "pythonVersion": "3.11"
+}
